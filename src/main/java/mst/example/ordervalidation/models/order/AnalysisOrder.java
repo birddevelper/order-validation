@@ -1,20 +1,26 @@
 package mst.example.ordervalidation.models.order;
 
-import mst.example.ordervalidation.models.ValidationError;
+import lombok.*;
+import lombok.experimental.Accessors;
+import mst.example.ordervalidation.models.ValidationResult;
 
-import java.util.List;
-
+@Data
+@NoArgsConstructor
+@ToString
+@Getter
+@Setter
+@Accessors(fluent = false, chain = true)
 public class AnalysisOrder extends Order{
 
 
     /**
      * This method applies validation related to specific type of the order and put all possible errors into the validationErrors,
      * if no error found, it returns true.
-     * @param validationErrors Validation errors of the order will be appended to validationErrors List
      * @return true in case it founds no error, false in case it found error
      */
     @Override
-    boolean extendedValidation(List<ValidationError> validationErrors) {
-        return false;
+    public ValidationResult validate() {
+
+        return this.basicValidate();
     }
 }
