@@ -1,12 +1,11 @@
 package mst.example.ordervalidation.controllers;
 
-import mst.example.ordervalidation.models.responseModel.ApiResponseModel;
+import mst.example.ordervalidation.models.responseModel.ErrorResponseModel;
+import mst.example.ordervalidation.models.responseModel.ValidationApiResponseModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-
-import javax.transaction.NotSupportedException;
 
 
 // This class handles error and return appropriate response to client
@@ -16,15 +15,15 @@ public class ExceptionHelper {
 
     // handling IllegalArgumentException
     @ExceptionHandler(value = {IllegalArgumentException.class})
-    public ResponseEntity<ApiResponseModel<String>> handleIllegalArgumentException(IllegalArgumentException ex) {
+    public ResponseEntity<ErrorResponseModel> handleIllegalArgumentException(IllegalArgumentException ex) {
 
 
-        ApiResponseModel<String> apiResponseModel = new ApiResponseModel<>();
-        apiResponseModel.setMessage("ERROR");
-        apiResponseModel.setDescription(ex.getMessage());
+        ErrorResponseModel errorResponseModel = new ErrorResponseModel();
+        errorResponseModel.setMessage("ERROR");
+        errorResponseModel.setDescription(ex.getMessage());
 
         // send response with 400 status code
-        return new ResponseEntity(apiResponseModel, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity(errorResponseModel, HttpStatus.BAD_REQUEST);
 
 
     }
@@ -32,14 +31,14 @@ public class ExceptionHelper {
 
     // handling other Exception
     @ExceptionHandler(value = {Exception.class})
-    public ResponseEntity<ApiResponseModel<String>> handleException(Exception ex) {
+    public ResponseEntity<ErrorResponseModel> handleException(Exception ex) {
 
-        ApiResponseModel<String> apiResponseModel = new ApiResponseModel<>();
-        apiResponseModel.setMessage("ERROR");
-        apiResponseModel.setDescription(ex.getMessage());
+        ErrorResponseModel errorResponseModel = new ErrorResponseModel();
+        errorResponseModel.setMessage("ERROR");
+        errorResponseModel.setDescription(ex.getMessage());
 
         // send response with 500 status code
-        return new ResponseEntity<>(apiResponseModel, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(errorResponseModel, HttpStatus.INTERNAL_SERVER_ERROR);
 
 
     }

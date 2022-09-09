@@ -1,5 +1,6 @@
 package mst.example.ordervalidation.models.order;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import lombok.experimental.Accessors;
 import mst.example.ordervalidation.models.Part;
@@ -15,7 +16,10 @@ import mst.example.ordervalidation.models.ValidationResult;
 @Accessors(fluent = false, chain = true)
 public class ReplacementOrder extends Order{
 
+    @JsonProperty("factory_name")
     private String factoryName;
+
+    @JsonProperty("factory_order_number")
     private String factoryOrderNumber;
 
     /**

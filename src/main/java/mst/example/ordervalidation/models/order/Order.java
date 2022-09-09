@@ -1,5 +1,7 @@
 package mst.example.ordervalidation.models.order;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.*;
@@ -28,20 +30,35 @@ import java.util.Locale;
 @Accessors(fluent = false, chain = true)
 public abstract class Order {
 
+    @JsonProperty("type")
     protected String type;
+
+    @JsonProperty("department")
     protected String department;
+
+    @JsonProperty("start_date")
     protected Date startDate;
+
+    @JsonProperty("end_date")
     protected Date endDate;
+
+    @JsonProperty("currency")
     protected String currency;
+
+    @JsonProperty("cost")
     protected double cost;
+
+    @JsonProperty("parts")
     protected List<Part> parts;
 
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
+    @JsonIgnore
     protected boolean valid = true;
 
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
+    @JsonIgnore
     protected List<ValidationError> validationErrors;
 
     /**

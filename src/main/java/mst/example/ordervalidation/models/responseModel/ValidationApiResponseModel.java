@@ -1,6 +1,7 @@
 package mst.example.ordervalidation.models.responseModel;
 
 import lombok.*;
+import mst.example.ordervalidation.models.ValidationResult;
 
 @Data
 @AllArgsConstructor
@@ -8,9 +9,9 @@ import lombok.*;
 @ToString
 @Getter
 @Setter
-public class ApiResponseModel<T> {
+public class ValidationApiResponseModel {
 
     private String message;
     private String description;
-    private T Records;
+    private ValidationResult validationResult;
 }

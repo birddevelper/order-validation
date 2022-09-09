@@ -1,5 +1,6 @@
 package mst.example.ordervalidation.models.order;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import lombok.experimental.Accessors;
 import mst.example.ordervalidation.models.Part;
@@ -18,8 +19,13 @@ import java.util.Date;
 @Accessors(fluent = false, chain = true)
 public class RepairOrder extends Order{
 
+    @JsonProperty("analysis_date")
     private Date analysisDate;
+
+    @JsonProperty("test_date")
     private Date testDate;
+
+    @JsonProperty("responsible_person")
     private String responsiblePerson;
 
 
