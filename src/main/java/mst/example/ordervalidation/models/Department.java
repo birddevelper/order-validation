@@ -7,7 +7,8 @@ public enum Department {
 
     GOOD_ANALYSIS_DEPARTMENT("GOoD analysis department"),
     GOOD_REPAIR_DEPARTMENT("GOoD repair department"),
-    GOOD_REPLACEMENT_DEPARTMENT("GOoD replacement department");
+    GOOD_REPLACEMENT_DEPARTMENT("GOoD replacement department"),
+    IT_DEPARTMENT("IT department");
 
     Department(String departmentName) {
         this.departmentName = departmentName;

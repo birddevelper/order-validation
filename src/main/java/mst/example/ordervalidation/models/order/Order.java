@@ -28,13 +28,13 @@ import java.util.Locale;
 @Accessors(fluent = false, chain = true)
 public abstract class Order {
 
-    private String type;
-    private String department;
-    private Date startDate;
-    private Date endDate;
-    private String currency;
-    private double cost;
-    private List<Part> parts;
+    protected String type;
+    protected String department;
+    protected Date startDate;
+    protected Date endDate;
+    protected String currency;
+    protected double cost;
+    protected List<Part> parts;
 
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
@@ -109,11 +109,12 @@ public abstract class Order {
             return;
         }
 
-        if(!this.endDate.after(this.startDate)){
-            valid=false;
-            validationErrors.add(new ValidationError("endDate field is not after startDate",
-                    "endDate field must not be empty, and must be after startDate"));
-        }
+        if(this.startDate!=null)
+            if(!this.endDate.after(this.startDate)){
+                valid=false;
+                validationErrors.add(new ValidationError("endDate field is not after startDate",
+                        "endDate field must not be empty, and must be after startDate"));
+            }
 
     }
 

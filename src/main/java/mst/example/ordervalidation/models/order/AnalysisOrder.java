@@ -14,7 +14,7 @@ public class AnalysisOrder extends Order{
 
 
     /**
-     * This method applies validation related to specific type of the order and put all possible errors into the validationErrors,
+     * This method applies validation related to Analysis type of the order and put all possible errors into the validationErrors,
      * if no error found, it returns true.
      * @return true in case it founds no error, false in case it found error
      */
