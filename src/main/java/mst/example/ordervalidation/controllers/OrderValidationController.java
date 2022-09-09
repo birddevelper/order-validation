@@ -41,8 +41,8 @@ public class OrderValidationController {
 
 
     // - POST /api/queries/genresBestSellingMovies
-    // (Gets an order and returns its validation result)
-    @Operation(summary = "Gets an order and returns its validation result")
+    // (accepts an order and returns its validation result)
+    @Operation(summary = "Accepts an order and returns its validation result")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Validation done.",
                     content = { @Content(mediaType = "application/json",
@@ -57,18 +57,24 @@ public class OrderValidationController {
     @PostMapping(value = "/validateOrder", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ValidationApiResponseModel> validateOrder(@RequestBody Order order) {
 
+        // initiate response object
         ValidationApiResponseModel validationApiResponseModel = new ValidationApiResponseModel();
         validationApiResponseModel.setMessage("OK");
         validationApiResponseModel.setDescription("Validation done.");
+
+        // Validate the given order
+        // The order will automatically cast to its exact subclass, so don't need to cast it explicitly
         ValidationResult validationResult = orderValidationService.validateOrder(order);
         validationApiResponseModel.setValidationResult(validationResult);
 
+        // initiate validationRequest to store it in DB
         ValidationRequest validationRequest = new ValidationRequest(
                                             new Date(),
                                             order.getType(),
                                             order.getDepartment(),
                                             validationResult.isValid()? OrderStatus.VALID : OrderStatus.NOT_VALID);
 
+        // store validation result into DB
         validationRequestService.storeValidationRequest(validationRequest);
 
         return new ResponseEntity(validationApiResponseModel, HttpStatus.OK);
@@ -86,15 +92,16 @@ public class OrderValidationController {
             @ApiResponse(responseCode = "500", description = "Internal Error",
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = ErrorResponseModel.class))) })
-    @PostMapping(value = "/validationHistory", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/validationHistory", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ValidationHistoryApiResponseModel> validationRequestHistory(){
 
+        // retrieve the history from DB
         List<ValidationRequest> validationRequests = validationRequestService.validationRequestHistory();
 
         // initialize the response
         ValidationHistoryApiResponseModel validationHistoryApiResponseModel = new ValidationHistoryApiResponseModel();
         validationHistoryApiResponseModel.setMessage("OK");
-        validationHistoryApiResponseModel.setDescription("Validation done.");
+        validationHistoryApiResponseModel.setDescription("Validation history successfully retrieved.");
         validationHistoryApiResponseModel.setValidationRequests(validationRequests);
 
 

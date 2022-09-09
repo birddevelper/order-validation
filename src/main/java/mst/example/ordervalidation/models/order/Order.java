@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Locale;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type", visible = true)
+// Automatically cast the order to its exact subclass
 @JsonSubTypes({
         @JsonSubTypes.Type(value = AnalysisOrder.class, name = "ANALYSIS"),
         @JsonSubTypes.Type(value = RepairOrder.class, name = "REPAIR"),
@@ -86,6 +87,9 @@ public abstract class Order {
      */
     public abstract ValidationResult validate();
 
+    /**
+     * This method validates department field of the order object
+     */
     protected void validateDepartment(){
         if(this.department.length()==0){
             valid=false;
@@ -101,6 +105,9 @@ public abstract class Order {
         }
     }
 
+    /**
+     * This method validates startDate field of the order object
+     */
     protected void validateStartDate(){
         if(this.startDate == null){
             valid=false;
@@ -118,6 +125,9 @@ public abstract class Order {
 
     }
 
+    /**
+     * This method endDate department field of the order object
+     */
     protected void validateEndDate(){
         if(this.endDate == null){
             valid=false;
@@ -136,6 +146,9 @@ public abstract class Order {
     }
 
 
+    /**
+     * This method validates currency field of the order object
+     */
     protected void validateCurrency(){
         if( this.currency == null || this.currency.length()==0){
             valid=false;
@@ -155,7 +168,9 @@ public abstract class Order {
 
     }
 
-
+    /**
+     * This method validates cost field of the order object
+     */
     protected void validateCost(){
         if(this.cost<=0){
             valid=false;

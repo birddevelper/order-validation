@@ -39,7 +39,11 @@ public class ReplacementOrder extends Order{
 
     }
 
+    /**
+     * This method validates factoryName field of the replacement order object
+     */
     protected void validateFactoryName() {
+        // if it is null or empty then change valid status to false and add error to the list
         if (this.factoryName == null || this.factoryName.equals("")) {
             valid = false;
             validationErrors.add(new ValidationError("factoryName field is empty",
@@ -48,7 +52,11 @@ public class ReplacementOrder extends Order{
         }
     }
 
+    /**
+     * This method validates factoryOrderNumber field of the replacement order object
+     */
     protected void validateFactoryOrderNumber() {
+        // if it is null then change valid status to false and add error to the list
         if (this.factoryOrderNumber == null) {
             valid = false;
             validationErrors.add(new ValidationError("factoryOrderNumber field is empty",
@@ -56,6 +64,7 @@ public class ReplacementOrder extends Order{
             return;
         }
 
+        // check if it matches the required pattern
         if (!this.factoryOrderNumber.matches("^[a-zA-Z]{2}[0-9]{8}$")) {
             valid = false;
             validationErrors.add(new ValidationError("factoryOrderNumber is invalid",
@@ -65,8 +74,11 @@ public class ReplacementOrder extends Order{
 
     }
 
-
+    /**
+     * This method validates parts field of the replacement order object
+     */
     protected void validateParts(){
+        // if it is null then change valid status to false and add error to the list
         if(this.parts == null){
             valid=false;
             validationErrors.add(new ValidationError("parts field is empty",
@@ -79,6 +91,8 @@ public class ReplacementOrder extends Order{
             if(part.getInventoryNumber()==null || part.getInventoryNumber().equals(""))
                 emptyInventoryNumberCount++;
         }
+
+        // if there exists any empty inventoryNumber change the valid state to false and add the error to the list
         if(emptyInventoryNumberCount>0){
             valid=false;
             validationErrors.add(new ValidationError(emptyInventoryNumberCount + " InventoryNumber(s) are empty",

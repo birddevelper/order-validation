@@ -19,6 +19,8 @@ public class OrderValidationServiceImpl implements OrderValidationService {
      */
     @Override
     public ValidationResult validateOrder(Order order) {
+
+        // validate the order with validate method of the object
         ValidationResult validationResult = order.validate();
         return validationResult;
     }

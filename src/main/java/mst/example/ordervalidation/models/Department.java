@@ -22,11 +22,18 @@ public enum Department {
     }
 
 
+    /**
+     * This method checks the existence of the given department name in the valid department list
+     * @param departmentName
+     * @return boolean
+     */
     public static boolean exists(String departmentName)
     {
+        // iterate over department list
         for(Department department:values())
             if (department.departmentName.equals(departmentName))
                 return true;
+        // if no department is found, return false
         return false;
     }
 }
