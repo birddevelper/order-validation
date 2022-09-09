@@ -1,0 +1,15 @@
+version: '2.1'
+
+services:
+
+  #service for validation-service
+  imdbservice:
+    image: validation-service-image
+    container_name: validation-service
+    hostname: validation-service-host
+    build :
+      context : ./
+      dockerfile: Dockerfile
+    ports:
+      - '8090:8090'
+    restart: always
