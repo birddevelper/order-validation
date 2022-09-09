@@ -39,9 +39,12 @@ class AnalysisOrderTest {
     }
 
     @Test
-    void WhenValidateAnalysisOrderWithInvalidDepartment_ThenReturnFalseValidationResult() {
+    void WhenValidateAnalysisOrderWithEmptyOrInvalidDepartment_ThenReturnFalseValidationResult() {
         AnalysisOrder analysisOrder = new AnalysisOrder();
+
+
         analysisOrder.setType("ANALYSIS")
+                // Test with invalid department
                 .setDepartment("G department")
                 .setStartDate(new GregorianCalendar(2022, Calendar.SEPTEMBER, 1).getTime())
                 .setEndDate(new GregorianCalendar(2022, Calendar.SEPTEMBER, 3).getTime())
@@ -54,10 +57,17 @@ class AnalysisOrderTest {
         assertEquals(1,validationResult.getValidationErrors().size());
         assertEquals("Provided department is not valid",validationResult.getValidationErrors().get(0).getError());
 
+        // Test with empty department
+        analysisOrder.setDepartment("");
+        validationResult = analysisOrder.validate();
+        assertFalse(validationResult.isValid());
+        assertEquals(1,validationResult.getValidationErrors().size());
+        assertEquals("Department field is empty",validationResult.getValidationErrors().get(0).getError());
+
     }
 
     @Test
-    void WhenValidateAnalysisOrderWithStartDateAfterCurrentDay_ThenReturnFalseValidationResult() {
+    void WhenValidateAnalysisOrderWithStartDateAfterCurrentDayOrNull_ThenReturnFalseValidationResult() {
         AnalysisOrder analysisOrder = new AnalysisOrder();
         analysisOrder.setType("ANALYSIS")
                 .setDepartment("GOoD analysis department")
@@ -72,10 +82,15 @@ class AnalysisOrderTest {
         assertEquals(1,validationResult.getValidationErrors().size());
         assertEquals("startDate field is not before current date",validationResult.getValidationErrors().get(0).getError());
 
+        analysisOrder.setStartDate(null);
+        validationResult = analysisOrder.validate();
+        assertEquals(1,validationResult.getValidationErrors().size());
+        assertEquals("startDate field is empty",validationResult.getValidationErrors().get(0).getError());
+
     }
 
     @Test
-    void WhenValidateAnalysisOrderWithEndDateBeforeStartDate_ThenReturnFalseValidationResult() {
+    void WhenValidateAnalysisOrderWithEndDateBeforeStartDateOrNull_ThenReturnFalseValidationResult() {
         AnalysisOrder analysisOrder = new AnalysisOrder();
         analysisOrder.setType("ANALYSIS")
                 .setDepartment("GOoD analysis department")
@@ -90,6 +105,10 @@ class AnalysisOrderTest {
         assertEquals(1,validationResult.getValidationErrors().size());
         assertEquals("endDate field is not after startDate",validationResult.getValidationErrors().get(0).getError());
 
+        analysisOrder.setEndDate(null);
+        validationResult = analysisOrder.validate();
+        assertEquals(1,validationResult.getValidationErrors().size());
+        assertEquals("endDate field is empty",validationResult.getValidationErrors().get(0).getError());
 
     }
 
